@@ -1,6 +1,6 @@
 <!-- page content -->
 <div class="right_col" role="main">
-    <h1 style="margin-left: 5px; margin-top: 5px;">Google Search Console</h1>
+    <h1 style="margin-left: 5px; ">Google Search Console</h1>
     <h2><?=$data['cur_site']?></h2>
     <hr/>
     
@@ -172,6 +172,7 @@
 </body>
 <style type="text/css">
        body{
-            overflow-x:hidden;
+            overflow-y:hidden;
         }
+
 </style>

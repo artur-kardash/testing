@@ -1,7 +1,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
 
-    <h1 style="margin-left: 5px; margin-top: 5px;">Gmetrix</h1>
+    <h1 style="margin-left: 5px; ">Gmetrix</h1>
     <h2 style="margin-left: 5px;" ><?=$data["gmetrix"]["url"]?></h2>
     <hr/>
     <div class="row">
@@ -100,5 +100,9 @@
     body{
         overflow-x:hidden;
         overflow-y:hidden;
+
+    }
+    h1, h2{
+        padding-left: 10px;
     }
 </style>

@@ -277,14 +277,16 @@ class Model_Searchconsole extends Model {
     public function clientinfo()
   {
     session_start();
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
+    // if(isset($_GET['id'])){
+    //     $id = $_GET['id'];
        
-        $_SESSION['client_id'] = $id;
+    //     $_SESSION['client_id'] = $id;
 
-    }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
-        $id = $_SESSION['client_id'];
-    }
+    // }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
+    //     $id = $_SESSION['client_id'];
+    // }
+    
+    $id = $_SESSION['client_id'];
 
     $sql = "SELECT * FROM `clients`";
     $sql .="WHERE id='$id'";
@@ -317,17 +319,26 @@ class Model_Searchconsole extends Model {
     public function hash()
   {
     
-    if(isset($_GET['id']))
-    {
-      $id = $_GET['id'];
-    }else{
-      $id = $_SESSION['client_id'];  
-    }
-      $hash = 'SKDJFD'.md5($id);
-      $sql = "INSERT INTO `hash`(id_client, hash) VALUES ('$id', '$hash')";
-      $con = $this->db();
-      $res = $con->query($sql);
+    // if(isset($_GET['id']))
+    // {
+    //   $id = $_GET['id'];
+    // }else{
+    //   $id = $_SESSION['client_id'];  
+    // }
+    session_start();
+    // $id = $_SESSION['client_id'];  
+
+    //   $hash = 'SKDJFD'.md5($id);
+    //   $sql = "INSERT INTO `hash`(id_client, hash) VALUES ('$id', '$hash')";
+    //   $con = $this->db();
+    //   $res = $con->query($sql);
       
+       $id = $_SESSION['client_id'];
+        $id_user = $_SESSION['user_id'];
+        $sol = 'SKDJFD';
+        $data = $id."&".$id_user;  
+        $idus_id_cl = base64_encode($data);
+        $hash = $sol.$idus_id_cl;
       return $hash; 
     
   }

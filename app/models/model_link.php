@@ -9,9 +9,18 @@ class Model_Link extends Model {
 
     function __construct($client) {
         $this->client = $client;
+        $hash = $_GET['id'];
+        $hash_id = substr($hash, 6);
+        $all_id = base64_decode($hash_id);
+        $res_id = explode("&", $all_id);
+        $client_id = $res_id[0];
+        $user_id = $res_id[1];
+        $this->client_id=$client_id;
+        $this->user_id=$user_id;
     }
 
     public function searchconsole() {
+
 
         if(!$this->currentSite()){
             $data = array();
@@ -36,9 +45,9 @@ class Model_Link extends Model {
         $client->setAuthConfig($oauth_credentials);
         $client->setRedirectUri($redirect_uri);
         $client->addScope("https://www.googleapis.com/auth/webmasters");
-        $agency_id = $_SESSION['user_id'];
-        $client_id = $_SESSION['client_id'];
-        
+        $agency_id = $this->user_id;
+        $client_id = $this->client_id;
+       
 
         // add "?logout" to the URL to remove a token from the session
         if (isset($_REQUEST['logout'])) {
@@ -217,18 +226,15 @@ class Model_Link extends Model {
   }
 
   private function currentSite(){
-      session_start();
-      $agency_id = $_SESSION['user_id'];
-      $client_id = $_SESSION['client_id'];
+
+
+      $agency_id = $this->user_id;
+      $client_id = $this->client_id;
       $sql = "SELECT * FROM client_api";
       $sql .= " WHERE (agency_id = '$agency_id') AND (client_id = '$client_id') AND (api_name = 'search_console')";
       $con = $this->db();
       $res = $con->query($sql);
       $row = $res->fetch_assoc();
-//      echo('<pre>');
-//      var_dump($row);
-//      var_dump($sql);
-//      die();
 
       $current_site = $row['api_profile_id'];
 
@@ -277,14 +283,15 @@ class Model_Link extends Model {
     public function clientinfo()
   {
     session_start();
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
+    // if(isset($_GET['id'])){
+    //     $id = $_GET['id'];
        
-        $_SESSION['client_id'] = $id;
+    //     $_SESSION['client_id'] = $id;
 
-    }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
-        $id = $_SESSION['client_id'];
-    }
+    // }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
+    //     $id = $_SESSION['client_id'];
+    // }
+    $id = $client_id;
 
     $sql = "SELECT * FROM `clients`";
     $sql .="WHERE id='$id'";

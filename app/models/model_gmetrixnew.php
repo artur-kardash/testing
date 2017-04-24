@@ -124,14 +124,17 @@ class Model_Gmetrixnew extends Model{
 
     public function clientinfo()
     {
-        //die('777');
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
-        session_start();
-        $_SESSION['client_id'] = $id;
-    }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
-        $id = $_SESSION['client_id'];
-    }
+       
+    // if(isset($_GET['id'])){
+    //     $id = $_GET['id'];
+    //     session_start();
+    //     $_SESSION['client_id'] = $id;
+    // }elseif(!isset($_GET['id']) && isset($_SESSION['client_id'])){
+    //     $id = $_SESSION['client_id'];
+    // }
+    
+    session_start();
+    $id = $_SESSION['client_id'];
     $sql = "SELECT * FROM `clients`";
     $sql .="WHERE id='$id'";
     $con = $this->db();
@@ -162,18 +165,25 @@ class Model_Gmetrixnew extends Model{
 
      public function hash()
     {
-        if(isset($_GET))
-        {
-          $id = $_GET['id'];
-        }else{
-          $id = $_SESSION['client_id'];  
-        }
-          $hash = 'SKDJFD'.md5($id);
-          $sql = "INSERT INTO `hash`(id_client, hash) VALUES ('$id', '$hash')";
-          $con = $this->db();
-          $res = $con->query($sql);
+        // if(isset($_GET))
+        // {
+        //   $id = $_GET['id'];
+        // }else{
+        //   $id = $_SESSION['client_id'];  
+        // }
+        session_start();
+        $id = $_SESSION['client_id'];
+        $id_user = $_SESSION['user_id'];
+        $sol = 'SKDJFD';
+        $data = $id."&".$id_user;  
+        $idus_id_cl = base64_encode($data);
+        $hash = $sol.$idus_id_cl;
+          // $hash = 'SKDJFD'.md5($id);
+          // $sql = "INSERT INTO `hash`(id_client, hash) VALUES ('$id', '$hash')";
+          // $con = $this->db();
+          // $res = $con->query($sql);
           
-          return $hash; 
+        return $hash; 
         
     }   
 }

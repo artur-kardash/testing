@@ -55,7 +55,7 @@
                                         <input type="hidden"  name="delete" value="delete">
                                         <input type="hidden"  name="siteurl" value="<?=$data['cur_site']?>">
                                         <input type="hidden"  name="feedpath" value="<?=$sitemap['path']?>">
-                                        <input type="submit" value="Delete sitemap" class="btn btn-danger btn-small">
+                                        <!-- <input type="submit" value="Delete sitemap" class="btn btn-danger btn-small"> -->
 
                                     </form>
                                 </td>

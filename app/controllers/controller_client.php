@@ -21,10 +21,15 @@ class Controller_Client extends Controller
       $_SESSION['client_id'] = $_GET['id'];
       $role['level'] = 2;
     }
+    if($page[0] == '/client/linksearch' || $page[0] == '/client/linkgmetrix'){
+        // $_SESSION['user'] == md5('user');
+      $role['level'] = 3;
+    }
     if ($role['level'] > 3 || $role['level'] < 1){
         $this->view->generate('danied_view.php', 'template_view.php');
         die();
     }
+
   }
 
   function action_index() {
@@ -296,22 +301,23 @@ class Controller_Client extends Controller
 
   public function action_linksearch()
   {
-    $res = $this->model->clientinfo();
-    $data['inf'] = $res;
+
     require_once("vendor/autoload.php");
-    require_once 'app/models/model_link.php';
+    require_once ("app/models/model_link.php");
     $client = new Google_Client();
     $client->getRefreshToken();
     $this->model = new Model_Link($client);
     $this->view = new View();
+    $res = $this->model->clientinfo();
+    $data['inf'] = $res;
     $data = $this->model->searchconsole();
     $this->view->generate('client/client_search_view.php', 'link_template_view.php', $data);
   }
 
   public function action_linkgmetrix()
   {
-    require_once('app/models/model_gmetrixnew.php');
-    $this->model = new Model_Gmetrixnew();
+    require_once('app/models/model_linkgmetrix.php');
+    $this->model = new Model_Linkgmetrix();
     $this->view = new View();
     $data = $this->model->gmetrix();
     $result = $this->model->clientinfo();
